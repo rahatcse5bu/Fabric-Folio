@@ -22,8 +22,9 @@ class AuthService {
       LocalStorageInterface prefs = await LocalStorage.getInstance();
       // prefs.setBool("isLoggedd", false);
         prefs.setString('username', 'notLogged');
+        prefs.setString('user_id', 'null');
       http.Response res = await http.post(
-        Uri.parse('https://nuriya-tailers-backend.vercel.app/api/auth/login'),
+        Uri.parse('https://fabric-folio.vercel.app/api/auth/login'),
         body: jsonEncode({
           "username": userName,
           "password": password,
@@ -42,6 +43,9 @@ class AuthService {
           await prefs.setString('apiToken', 'logIn');
           // prefs.setBool("isLoggedd", true);
           prefs.setString('username', 'Logged');
+          var responseBody = jsonDecode(res.body);
+          print(responseBody['_id'].toString());
+          prefs.setString('user_id', responseBody['_id']);
           // ignore: use_build_context_synchronously
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => const NavbarScreen()));

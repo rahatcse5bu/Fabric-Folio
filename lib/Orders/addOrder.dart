@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cross_local_storage/cross_local_storage.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +20,7 @@ class addOrder extends StatefulWidget {
 }
 
 class _addOrderState extends State<addOrder> {
+  
   List<Map<String, dynamic>> customers = [];
   List<Map<String, dynamic>> clothList = [];
   bool isSeloyar = false;
@@ -205,10 +207,14 @@ class _addOrderState extends State<addOrder> {
     double paidAmount,
     DateTime estimatedDeliveryTime,
   ) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/';
+          LocalStorageInterface prefs = await LocalStorage.getInstance();
+    // final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/';
+    final url = 'https://fabric-folio.vercel.app/api/orders/';
     final response = await http.post(
       Uri.parse(url),
       body: jsonEncode({
+        // 'user':'659d2aa69822f26d7e8a5675',
+        'user':prefs.getString('user_id'),
         'customerName': _selectedCustomerName,
         'customerPhone': _selectedCustomerPhone,
         'customerLocation': _selectedCustomerLocation,
@@ -218,6 +224,7 @@ class _addOrderState extends State<addOrder> {
         'clothList': clothList,
         'orderStatus': 'pending',
       }),
+      
       headers: {'Content-Type': 'application/json'},
     );
     var myJSON = jsonEncode({
@@ -230,7 +237,7 @@ class _addOrderState extends State<addOrder> {
       'clothList': clothList,
       'orderStatus': 'pending',
     });
-    // print(myJSON);
+    print(myJSON);
 
     if (response.statusCode == 200) {
       // id = jsonDecode(response.body)['_id'];

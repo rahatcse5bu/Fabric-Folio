@@ -38,7 +38,7 @@ class _orderDetailsNewState extends State<orderDetailsNew> {
   }
 
   Future<void> deleteOrder(String id) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/$id';
+    final url = 'https://fabric-folio.vercel.app/api/orders/$id';
     final response = await http.delete(Uri.parse(url));
     if (response.statusCode == 200) {
       // Material PageRoute is used to slide the page to the right.
@@ -54,7 +54,7 @@ class _orderDetailsNewState extends State<orderDetailsNew> {
   }
 
   Future<void> markAsDelivered(String orderId) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/$orderId';
+    final url = 'https://fabric-folio.vercel.app/api/orders/$orderId';
     final body = jsonEncode({'orderStatus': 'delivered'});
 
     try {
@@ -103,7 +103,7 @@ class _orderDetailsNewState extends State<orderDetailsNew> {
   }
 
   Future<Map<String, dynamic>> getOrderDetails(String orderId) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/$orderId';
+    final url = 'https://fabric-folio.vercel.app/api/orders/$orderId';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -124,7 +124,7 @@ class _orderDetailsNewState extends State<orderDetailsNew> {
   }
 
   Future<List<Map<String, dynamic>>> getOrderDetails1(String orderId) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/$orderId';
+    final url = 'https://fabric-folio.vercel.app/api/orders/$orderId';
 
     try {
       final response = await http.get(Uri.parse(url));

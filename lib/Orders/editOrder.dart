@@ -118,7 +118,7 @@ class _editOrderState extends State<editOrder> {
   Map<String, dynamic> orderDetails = {};
   bool isLoading = true;
   Future<Map<String, dynamic>> getOrderDetails(String orderId) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/$orderId';
+    final url = 'https://fabric-folio.vercel.app/api/orders/$orderId';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -193,7 +193,7 @@ class _editOrderState extends State<editOrder> {
     DateTime estimatedDeliveryTime,
   ) async {
     orderId = widget.orderId;
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/$orderId';
+    final url = 'https://fabric-folio.vercel.app/api/orders/$orderId';
     final response = await http.patch(
       Uri.parse(url),
       body: jsonEncode({

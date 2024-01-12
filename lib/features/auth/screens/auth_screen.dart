@@ -6,6 +6,7 @@ import 'dart:developer';
 import 'package:cross_local_storage/cross_local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:nuriya_tailers/common/custom_button.dart';
+import 'package:nuriya_tailers/features/auth/screens/Register.dart';
 import 'package:nuriya_tailers/features/auth/services/auth_services.dart';
 
 import '../../../Navbar/navbar.dart';
@@ -158,7 +159,28 @@ class _AuthScreenState extends State<AuthScreen> {
                                         text: 'Sign In',
                                         onTap: () {
                                           signInUser();
-                                        })
+                                        }),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Column(
+                                          children: [
+                                              TextButton(
+                              onPressed: () {
+                                //material navigation to previous page
+                                Timer(
+                                    const Duration(seconds: 1),
+                                    () => Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Register())));
+                           
+                              },
+                              child: Text('Create an Account'),
+                            ),
+                                          ],
+                                        )
                                   ],
                                 )),
                           ],

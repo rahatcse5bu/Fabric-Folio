@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cross_local_storage/cross_local_storage.dart';
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -73,8 +74,11 @@ class _OrdersState extends State<Orders> {
 
   //my variables ends
   Future<List<Order>> fetchOrders() async {
+              LocalStorageInterface prefs = await LocalStorage.getInstance();
+              String? u_id = prefs.getString('user_id');
     final response = await http.get(
-        Uri.parse('https://nuriya-tailers-backend.vercel.app/api/orders/'));
+        // Uri.parse('https://nuriya-tailers-backend.vercel.app/api/orders/'));
+        Uri.parse('https://fabric-folio.vercel.app/api/orders/users/$u_id'));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
       List<Order> orderList = [];
@@ -118,7 +122,7 @@ class _OrdersState extends State<Orders> {
   }
 
   Future<void> deleteOrder(String id) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/$id';
+    final url = 'https://fabric-folio.vercel.app/api/orders/$id';
     final response = await http.delete(Uri.parse(url));
     if (response.statusCode == 200) {
       setState(() {
@@ -290,7 +294,7 @@ class _OrdersState extends State<Orders> {
   }
 
   Future<void> markAsDelivered(String orderId) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/$orderId';
+    final url = 'https://fabric-folio.vercel.app/api/orders/$orderId';
     final body = jsonEncode({'orderStatus': 'delivered'});
 
     try {
@@ -322,7 +326,7 @@ class _OrdersState extends State<Orders> {
   }
 
   Future<void> markAsDone(String orderId) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/orders/$orderId';
+    final url = 'https://fabric-folio.vercel.app/api/orders/$orderId';
     final body = jsonEncode({'orderStatus': 'done'});
 
     try {

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:cross_local_storage/cross_local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:nuriya_tailers/constants/colors.dart';
+import 'package:nuriya_tailers/features/auth/screens/Register.dart';
 import 'package:nuriya_tailers/features/auth/screens/auth_screen.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MyHomePage(),
+      // home: Register(),
       // home: addOrderNew(),
       // home: Orders(),
       debugShowCheckedModeBanner: false,
