@@ -45,6 +45,23 @@ class Order {
     required this.clothList,
   });
 }
+class User {
+  final String id;
+  final String username;
+  final String name;
+  final String email;
+  final String password;
+  final String shopName;
+
+  User({
+    required this.id,
+    required this.username,
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.shopName,
+  });
+}
 
 // class Customer {
 //   final String id;
@@ -62,6 +79,7 @@ class Order {
 
 class _OrdersState extends State<Orders> {
   List<Order> orders = [];
+  List<User> userDetails = [];
   List<Order> filteredOrders = [];
   List<Map<String, dynamic>> clothList = [];
   List<Map<String, dynamic>> customers = [];
@@ -107,7 +125,31 @@ class _OrdersState extends State<Orders> {
       throw Exception('Failed to fetch orders');
     }
   }
-
+Future<List<User>> fetchUserDetails() async {
+              LocalStorageInterface prefs = await LocalStorage.getInstance();
+              String? u_id = prefs.getString('user_id');
+    final response = await http.get(
+        // Uri.parse('https://nuriya-tailers-backend.vercel.app/api/orders/'));
+        Uri.parse('https://fabric-folio.vercel.app/api/users/$u_id'));
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      List<User> userDetails = [];
+      for (var order in jsonData['data']) {
+        userDetails.add(User(
+          id: order['_id'],
+          username: order['username'],
+          name: order['name'],
+          email: order['email'] ?? '',
+          password: order['password'] ?? '',
+          shopName: order['shopName'] ?? '',
+       
+        ));
+      }
+      return userDetails;
+    } else {
+      throw Exception('Failed to fetch User details');
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -117,6 +159,12 @@ class _OrdersState extends State<Orders> {
         orders = value;
         filteredOrders = value;
         // print(filteredOrders);
+      });
+    });
+    fetchUserDetails().then((value) {
+      setState(() {
+   userDetails = value;
+        print(userDetails);
       });
     });
   }
@@ -362,6 +410,7 @@ class _OrdersState extends State<Orders> {
     super.dispose();
   }
 
+
   void searchOrder(String searchQuery) {
     setState(() {
       // print("searching. " + searchQuery);
@@ -391,6 +440,7 @@ class _OrdersState extends State<Orders> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        
         title: Text(
           'Orders',
         ),
@@ -399,7 +449,7 @@ class _OrdersState extends State<Orders> {
         ),
         centerTitle: true,
         backgroundColor: GlobalVariables.primaryColor,
-        leading: null,
+        leading: Text(userDetails[0].username) ,
       ),
       body: Container(
         color: Colors.grey[250],

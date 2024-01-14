@@ -21,6 +21,7 @@ class _RegisterState extends State<Register> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
+   
     Future<void> registerShop(String username, String email, String password,
         String shopname, String name) async {
       var url = Uri.parse('https://fabric-folio.vercel.app/api/auth/');

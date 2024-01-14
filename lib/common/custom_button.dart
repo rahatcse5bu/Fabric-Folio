@@ -5,16 +5,12 @@ class CustomButton extends StatelessWidget {
   final String text;
   final Color? color;
   final VoidCallback onTap;
-  final isLoading;
   const CustomButton(
-      {super.key, required this.text, this.color, required this.onTap,required this.isLoading});
+      {super.key, required this.text, this.color, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return isLoading?
-    CircularProgressIndicator(color: GlobalVariables.primaryColor,)
-    
-    : ElevatedButton(
+    return ElevatedButton(
       onPressed: ()=>{onTap},
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(double.infinity, 50),
