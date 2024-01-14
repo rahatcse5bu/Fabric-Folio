@@ -77,11 +77,14 @@ class _AuthScreenState extends State<AuthScreen> {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  child: const Center(child: Text('নুরিয়া টেইলার্স')),
+                  child: const Center(child: Text('Fabric-Folio', style: TextStyle(color: Colors.white)),
+                  
+                  ),
                 ),
               ],
             ),
           ),
+
         ),
       ),
       backgroundColor: GlobalVariables.greyBackgroundCOlor,

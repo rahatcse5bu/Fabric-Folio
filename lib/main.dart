@@ -97,7 +97,7 @@ class SplashScreenState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
               Text(
-                'নুরিয়া পাঞ্জাবি টেইলার্স এন্ড ফেব্রিকস',
+                'Fabric-Folio',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -105,29 +105,11 @@ class SplashScreenState extends State<MyHomePage> {
                   decoration: TextDecoration.none,
                 ),
               ),
-              Text(
-                'মাদ্রাসা পাড়া, আশ্রাফাবাদ',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: GlobalVariables.backgroundColor,
-                  decoration: TextDecoration.none,
-                ),
-              ),
-              Text(
-                'কামরাঙ্গীর চর, ঢাকা',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: GlobalVariables.backgroundColor,
-                  decoration: TextDecoration.none,
-                ),
-              ),
               SizedBox(
-                height: 30,
+                height: 30, 
               ),
               Text(
-                'Developed by: PNC Soft Tech',
+                'Tailer Management System',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
@@ -135,30 +117,51 @@ class SplashScreenState extends State<MyHomePage> {
                   decoration: TextDecoration.none,
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Email:pncsofttechmail@gmail.com",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: GlobalVariables.backgroundColor,
-                  decoration: TextDecoration.none,
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                'Phone: 01793278360',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: GlobalVariables.backgroundColor,
-                  decoration: TextDecoration.none,
-                ),
-              ),
+              // Text(
+              //   'কামরাঙ্গীর চর, ঢাকা',
+              //   style: TextStyle(
+              //     fontWeight: FontWeight.w500,
+              //     fontSize: 14,
+              //     color: GlobalVariables.backgroundColor,
+              //     decoration: TextDecoration.none,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 30,
+              // ),
+              // Text(
+              //   'Developed by: PNC Soft Tech',
+              //   style: TextStyle(
+              //     fontWeight: FontWeight.w500,
+              //     fontSize: 14,
+              //     color: GlobalVariables.backgroundColor,
+              //     decoration: TextDecoration.none,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // Text(
+              //   "Email:pncsofttechmail@gmail.com",
+              //   style: TextStyle(
+              //     fontWeight: FontWeight.w500,
+              //     fontSize: 14,
+              //     color: GlobalVariables.backgroundColor,
+              //     decoration: TextDecoration.none,
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // Text(
+              //   'Phone: 01793278360',
+              //   style: TextStyle(
+              //     fontWeight: FontWeight.w500,
+              //     fontSize: 14,
+              //     color: GlobalVariables.backgroundColor,
+              //     decoration: TextDecoration.none,
+              //   ),
+              // ),
               SizedBox(
                 height: 40,
               ),

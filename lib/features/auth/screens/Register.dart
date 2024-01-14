@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nuriya_tailers/constants/colors.dart';
 import 'dart:convert';
 
 import 'package:nuriya_tailers/features/auth/screens/auth_screen.dart';
@@ -40,11 +41,8 @@ class _RegisterState extends State<Register> {
         if (response.statusCode == 201) {
           // Handle the response
           print('Shop Registered successfully');
-          Navigator.pushReplacement(
-           context,
-           MaterialPageRoute(
-             builder: (context) =>
-              const AuthScreen()));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const AuthScreen()));
         } else {
           // Handle the error
           print('Failed to register Shop. Status code: ${response.statusCode}');
@@ -55,72 +53,101 @@ class _RegisterState extends State<Register> {
     }
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: GlobalVariables.primaryColor,
+        title: Text('Register Shop', style: TextStyle(color: Colors.white)),
+        centerTitle: true,
+      ),
       body: Container(
-        padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-   
+        padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+        margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
         // decoration: BoxDecoration(border: Border.symmetric(horizontal: 10, vertical: 10)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: nameController,
-              decoration: InputDecoration(labelText: "Your Name"),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: shopController,
-              decoration: InputDecoration(labelText: "Shop Name"),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: emailController,
-              decoration: InputDecoration(labelText: "Email"),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              controller: usernameController,
-              decoration: InputDecoration(labelText: "Username"),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: InputDecoration(labelText: "Password")),
-            SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
+        decoration: BoxDecoration(
+          // boxShadow: [BoxShadow(blurRadius: 3, color: Colors.grey)],
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        child: Container(
+     width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(8),
+                                        topRight: Radius.circular(8),
+                                        bottomRight: Radius.circular(8),
+                                        bottomLeft: Radius.circular(8),
+                                        ),
+                                        
+                                    border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1.0),
+                                    color: Colors.white60),
+                                padding: const EdgeInsets.only(
+                                    bottom: 15, top: 15, left: 20, right: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: nameController,
+                decoration: InputDecoration(labelText: "Your Name"),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: shopController,
+                decoration: InputDecoration(labelText: "Shop Name"),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(labelText: "Email"),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                controller: usernameController,
+                decoration: InputDecoration(labelText: "Username"),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(labelText: "Password")),
+              SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(
                 onPressed: () {
                   print(usernameController.text);
-                              registerShop(
-                    usernameController.text,
-                    emailController.text,
-                    passwordController.text,
-                    shopController.text,
-                    nameController.text);
+                  registerShop(
+                      usernameController.text,
+                      emailController.text,
+                      passwordController.text,
+                      shopController.text,
+                      nameController.text);
                 },
-                child: Text("Register")),
-            TextButton(
-              onPressed: () {
-                registerShop(
-                    usernameController.text,
-                    emailController.text,
-                    passwordController.text,
-                    shopController.text,
-                    nameController.text);
-              },
-              child: Text("Already Have an account? Login Here"),
-            )
-          ],
+                child: Text("Register", style: TextStyle(color: Colors.white)),
+                style: ButtonStyle(
+                  maximumSize: 
+                  MaterialStateProperty.all<Size>(Size.fromHeight(50)),
+                    backgroundColor:
+                        MaterialStatePropertyAll(GlobalVariables.primaryColor)),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AuthScreen()));
+                },
+                child: Text("Already Have an account? Login Here"),
+              )
+            ],
+          ),
         ),
       ),
     );
