@@ -36,7 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-
+   bool isloading= false;
   @override
   void initState() {
     super.initState();
@@ -160,9 +160,14 @@ class _AuthScreenState extends State<AuthScreen> {
                                     ),
                                     CustomButton(
                                         text: 'Sign In',
+                                        isLoading:isloading,
                                         onTap: () {
+                                               setState(() {
+                                      isloading=true;
+                                });
                                           signInUser();
                                         }),
+                                        
                                         SizedBox(
                                           height: 10,
                                         ),
@@ -171,6 +176,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                               TextButton(
                               onPressed: () {
                                 //material navigation to previous page
+                            
+                           
                                 Timer(
                                     const Duration(seconds: 1),
                                     () => Navigator.pushReplacement(

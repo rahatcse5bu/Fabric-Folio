@@ -18,6 +18,7 @@ class _RegisterState extends State<Register> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController shopController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+  bool isLoading =false;
   @override
   Widget build(BuildContext context) {
     Future<void> registerShop(String username, String email, String password,
@@ -40,14 +41,23 @@ class _RegisterState extends State<Register> {
 
         if (response.statusCode == 201) {
           // Handle the response
+          setState(() {
+            isLoading=false;
+          });
           print('Shop Registered successfully');
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const AuthScreen()));
         } else {
+                    setState(() {
+            isLoading=false;
+          });
           // Handle the error
           print('Failed to register Shop. Status code: ${response.statusCode}');
         }
       } catch (e) {
+                  setState(() {
+            isLoading=false;
+          });
         print('Error: $e');
       }
     }
@@ -67,7 +77,7 @@ class _RegisterState extends State<Register> {
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: Container(
-     width: MediaQuery.of(context).size.width,
+     width: MediaQuery.of(context).size.width*.95,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(8),
@@ -120,9 +130,14 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
+            isLoading?
+            CircularProgressIndicator(color: GlobalVariables.primaryColor,)
+            :  ElevatedButton(
                 onPressed: () {
-                  print(usernameController.text);
+                  // print(usernameController.text);
+setState(() {
+  isLoading= true;
+});
                   registerShop(
                       usernameController.text,
                       emailController.text,
