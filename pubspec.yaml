@@ -44,6 +44,7 @@ dependencies:
   elegant_notification: any
   expansion_tile_card: any
   cross_local_storage: any
+  fluttertoast: ^8.2.4
 
 dev_dependencies:
   flutter_test:

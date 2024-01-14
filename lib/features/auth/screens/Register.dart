@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:nuriya_tailers/constants/colors.dart';
 import 'dart:convert';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nuriya_tailers/features/auth/screens/auth_screen.dart';
 
 class Register extends StatefulWidget {
@@ -18,7 +18,7 @@ class _RegisterState extends State<Register> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController shopController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
-  bool isLoading =false;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     Future<void> registerShop(String username, String email, String password,
@@ -42,22 +42,47 @@ class _RegisterState extends State<Register> {
         if (response.statusCode == 201) {
           // Handle the response
           setState(() {
-            isLoading=false;
+            isLoading = false;
           });
           print('Shop Registered successfully');
+          Fluttertoast.showToast(
+              msg: "Shop Registered successfully",
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: GlobalVariables.primaryColor,
+              textColor: Colors.white,
+              fontSize: 16.0);
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const AuthScreen()));
         } else {
-                    setState(() {
-            isLoading=false;
+          setState(() {
+            isLoading = false;
           });
+          Fluttertoast.showToast(
+              msg:
+                  'Failed to register Shop. Status code: ${response.statusCode}',
+              toastLength: Toast.LENGTH_LONG,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
           // Handle the error
           print('Failed to register Shop. Status code: ${response.statusCode}');
         }
       } catch (e) {
-                  setState(() {
-            isLoading=false;
-          });
+        setState(() {
+          isLoading = false;
+        });
+        Fluttertoast.showToast(
+            msg: 'Failed to register Shop. Error: $e',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
         print('Error: $e');
       }
     }
@@ -77,21 +102,18 @@ class _RegisterState extends State<Register> {
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: Container(
-     width: MediaQuery.of(context).size.width*.95,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8),
-                                        topRight: Radius.circular(8),
-                                        bottomRight: Radius.circular(8),
-                                        bottomLeft: Radius.circular(8),
-                                        ),
-                                        
-                                    border: Border.all(
-                                        color: Colors.grey,
-                                        width: 1.0),
-                                    color: Colors.white60),
-                                padding: const EdgeInsets.only(
-                                    bottom: 15, top: 15, left: 20, right: 20),
+          width: MediaQuery.of(context).size.width * .95,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
+                bottomRight: Radius.circular(8),
+                bottomLeft: Radius.circular(8),
+              ),
+              border: Border.all(color: Colors.grey, width: 1.0),
+              color: Colors.white60),
+          padding:
+              const EdgeInsets.only(bottom: 15, top: 15, left: 20, right: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -130,28 +152,31 @@ class _RegisterState extends State<Register> {
               SizedBox(
                 height: 10,
               ),
-            isLoading?
-            CircularProgressIndicator(color: GlobalVariables.primaryColor,)
-            :  ElevatedButton(
-                onPressed: () {
-                  // print(usernameController.text);
-setState(() {
-  isLoading= true;
-});
-                  registerShop(
-                      usernameController.text,
-                      emailController.text,
-                      passwordController.text,
-                      shopController.text,
-                      nameController.text);
-                },
-                child: Text("Register", style: TextStyle(color: Colors.white)),
-                style: ButtonStyle(
-                  maximumSize: 
-                  MaterialStateProperty.all<Size>(Size.fromHeight(50)),
-                    backgroundColor:
-                        MaterialStatePropertyAll(GlobalVariables.primaryColor)),
-              ),
+              isLoading
+                  ? CircularProgressIndicator(
+                      color: GlobalVariables.primaryColor,
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        // print(usernameController.text);
+                        setState(() {
+                          isLoading = true;
+                        });
+                        registerShop(
+                            usernameController.text,
+                            emailController.text,
+                            passwordController.text,
+                            shopController.text,
+                            nameController.text);
+                      },
+                      child: Text("Register",
+                          style: TextStyle(color: Colors.white)),
+                      style: ButtonStyle(
+                          maximumSize: MaterialStateProperty.all<Size>(
+                              Size.fromHeight(50)),
+                          backgroundColor: MaterialStatePropertyAll(
+                              GlobalVariables.primaryColor)),
+                    ),
               TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
