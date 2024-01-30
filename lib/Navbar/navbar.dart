@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nuriya_tailers/Customers/Customers.dart';
-import 'package:nuriya_tailers/Orders/OrdersOld.dart';
 import 'package:nuriya_tailers/constants/colors.dart';
 
 import '../About Us/aboutUs.dart';
 import '../Orders/Orders.dart';
-import '../Orders/addOrder.dart';
 
 class NavbarScreen extends StatefulWidget {
   const NavbarScreen({super.key});
@@ -20,10 +17,13 @@ class _NavbarScreenState extends State<NavbarScreen> {
   double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const Orders(),
+
+     Orders(),
+    //  Orders(),
+     AboutUs(),
     // const addOrder(),
     // const Customers(),
-     AboutUs(),
+    //  AboutUs(),
   ];
 
   void updatePage(int page) {
@@ -32,10 +32,22 @@ class _NavbarScreenState extends State<NavbarScreen> {
     });
   }
 
+@override
+void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("Page=================>");
+    print(_page.toString());
+    print(pages[_page].toString());
+    setState(() {
+      _page=0 ;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[_page],
+      body: Orders(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         selectedItemColor: GlobalVariables.primaryColor,

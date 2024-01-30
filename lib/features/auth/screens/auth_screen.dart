@@ -57,7 +57,7 @@ class _AuthScreenState extends State<AuthScreen> {
         password: _passwordController.text,
         userName: _usernameController.text);
   }
-
+bool isLoading=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,11 +157,11 @@ class _AuthScreenState extends State<AuthScreen> {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                    CustomButton(
+                                 isLoading? CircularProgressIndicator(color: GlobalVariables.primaryColor,):   CustomButton(
                                         text: 'Sign In',
                                       
                                         onTap: () {
-                                   
+                                          isLoading=true;
                                           signInUser();
                                         }),
                                         

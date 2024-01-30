@@ -13,46 +13,50 @@ import 'package:cross_local_storage/cross_local_storage.dart';
 
 class AuthService {
   // sign up user
-  void signInUser({
-    required BuildContext context,
-    required String userName,
-    required String password,
-  }) async {
-    try {
-      LocalStorageInterface prefs = await LocalStorage.getInstance();
-      // prefs.setBool("isLoggedd", false);
-        prefs.setString('username', 'notLogged');
-        prefs.setString('user_id', 'null');
-      http.Response res = await http.post(
-        Uri.parse('https://fabric-folio.vercel.app/api/auth/login'),
-        body: jsonEncode({
-          "username": userName,
-          "password": password,
-        }),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      );
-      inspect(res);
-      // ignore: use_build_context_synchronously
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () async {
-          // Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-          await prefs.setString('apiToken', 'logIn');
-          // prefs.setBool("isLoggedd", true);
-          prefs.setString('username', 'Logged');
-          var responseBody = jsonDecode(res.body);
-          print(responseBody['_id'].toString());
-          prefs.setString('user_id', responseBody['_id']);
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const NavbarScreen()));
-        },
-      );
-    } catch (e) {
-      showSnackBar(context, e.toString());
+void signInUser({
+  required BuildContext context,
+  required String userName,
+  required String password,
+}) async {
+  try {
+    LocalStorageInterface prefs = await LocalStorage.getInstance();
+
+    http.Response res = await http.post(
+      Uri.parse('https://fabric-folio.vercel.app/api/auth/login'),
+      body: jsonEncode({
+        "username": userName,
+        "password": password,
+      }),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    inspect(res);
+
+    if (res.statusCode >= 200 && res.statusCode < 300) {
+      // Successful response
+      var responseBody = jsonDecode(res.body);
+
+      if(responseBody.containsKey('_id') && responseBody['_id'] != null) {
+        // Valid response with user_id
+        await prefs.setString('apiToken', 'logIn');
+        prefs.setString('username', 'Logged');
+        prefs.setString('user_id', responseBody['_id'].toString());
+
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const NavbarScreen()));
+      } else {
+        // Handle invalid response
+        showSnackBar(context, "Invalid response: User ID not found");
+      }
+    } else {
+      // Handle error response
+      httpErrorHandle(response: res, context: context, onSuccess: () {});
     }
+  } catch (e) {
+    showSnackBar(context, e.toString());
   }
+}
+
 }
