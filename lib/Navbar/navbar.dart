@@ -18,8 +18,9 @@ class _NavbarScreenState extends State<NavbarScreen> {
 
   List<Widget> pages = [
 
-     Orders(),
     //  Orders(),
+    //  Orders(),
+   const  Orders(),
      AboutUs(),
     // const addOrder(),
     // const Customers(),
@@ -36,9 +37,9 @@ class _NavbarScreenState extends State<NavbarScreen> {
 void initState() {
     // TODO: implement initState
     super.initState();
-    print("Page=================>");
-    print(_page.toString());
-    print(pages[_page].toString());
+    // print("Page=================>");
+    // print(_page.toString());
+    // print(pages[_page].toString());
     setState(() {
       _page=0 ;
     });
@@ -47,7 +48,7 @@ void initState() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Orders(),
+      body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         selectedItemColor: GlobalVariables.primaryColor,

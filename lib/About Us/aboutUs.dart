@@ -1,14 +1,72 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:nuriya_tailers/constants/colors.dart';
 import 'package:cross_local_storage/cross_local_storage.dart';
 import 'package:nuriya_tailers/features/auth/screens/auth_screen.dart';
-
+import 'package:http/http.dart' as http;
 class AboutUs extends StatefulWidget {
   @override
   State<AboutUs> createState() => _AboutUsState();
 }
+class User {
+  final String id;
+  final String username;
+  final String name;
+  final String email;
+  final String password;
+  final String shopName;
+
+  User({
+    required this.id,
+    required this.username,
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.shopName,
+  });
+}
+Future<List<User>> fetchUserDetails() async {
+              LocalStorageInterface prefs = await LocalStorage.getInstance();
+              String? u_id = prefs.getString('user_id');
+    final response = await http.get(
+        // Uri.parse('https://nuriya-tailers-backend.vercel.app/api/orders/'));
+        Uri.parse('https://fabric-folio.vercel.app/api/users/$u_id'));
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      List<User> userDetails = [];
+      for (var order in jsonData['data']) {
+        userDetails.add(User(
+          id: order['_id'],
+          username: order['username'],
+          name: order['name'],
+          email: order['email'] ?? '',
+          password: order['password'] ?? '',
+          shopName: order['shopName'] ?? '',
+       
+        ));
+      }
+      return userDetails;
+    } else {
+      throw Exception('Failed to fetch User details');
+    }
+  }
 
 class _AboutUsState extends State<AboutUs> {
+    List<User> userDetails = [];
+    @override
+  void initState() {
+    super.initState();
+
+    fetchUserDetails().then((value) {
+      setState(() {
+   userDetails = value;
+        print(userDetails);
+      });
+    });
+
+   
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -7,9 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:nuriya_tailers/Orders/addOrder.dart';
 import 'package:nuriya_tailers/constants/colors.dart';
 
-import 'OrderDetailsOld.dart';
-import 'addOrderOld.dart';
-import 'editOrderOld.dart';
 import 'editOrder.dart';
 import 'orderDetails.dart';
 
@@ -153,18 +150,20 @@ Future<List<User>> fetchUserDetails() async {
   @override
   void initState() {
     super.initState();
-    fetchOrders().then((value) {
+
+    fetchUserDetails().then((value) {
+      setState(() {
+   userDetails = value;
+        print(userDetails);
+      });
+    });
+
+        fetchOrders().then((value) {
       setState(() {
         isLoading = false;
         orders = value;
         filteredOrders = value;
         // print(filteredOrders);
-      });
-    });
-    fetchUserDetails().then((value) {
-      setState(() {
-   userDetails = value;
-        print(userDetails);
       });
     });
   }
@@ -449,7 +448,9 @@ Future<List<User>> fetchUserDetails() async {
         ),
         centerTitle: true,
         backgroundColor: GlobalVariables.primaryColor,
-        leading: Text(userDetails[0].username) ,
+        // leading: Text(userDetails[0]!.username) ,
+        leading: userDetails.isNotEmpty ? Text(userDetails[0].username) : SizedBox(),
+
       ),
       body: Container(
         color: Colors.grey[250],
