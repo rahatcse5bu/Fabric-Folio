@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cross_local_storage/cross_local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:nuriya_tailers/constants/colors.dart';
@@ -41,9 +42,11 @@ class _CustomersState extends State<Customers> {
 
   //my variables ends
   Future<List<Customer>> fetchCustomers() async {
+            LocalStorageInterface prefs = await LocalStorage.getInstance();
+     String? user_id= prefs.getString('user_id');
     final response = await http.get(
-        Uri.parse('https://nuriya-tailers-backend.vercel.app/api/customers/'));
-    if (response.statusCode == 200) {
+        Uri.parse('https://fabric-folio.vercel.app/api/customers/all/'+user_id.toString()));
+    if (response.statusCode == 200 || response.statusCode == 202) {
       final jsonData = jsonDecode(response.body);
       List<Customer> customerList = [];
       for (var customer in jsonData['data']) {
@@ -75,7 +78,7 @@ class _CustomersState extends State<Customers> {
   }
 
   Future<void> deleteCustomer(String id) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/customers/$id';
+    final url = 'https://fabric-folio.vercel.app/api/customers/$id';
     final response = await http.delete(Uri.parse(url));
     if (response.statusCode == 200) {
       setState(() {

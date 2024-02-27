@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nuriya_tailers/Customers/Customers.dart';
 import 'package:nuriya_tailers/constants/colors.dart';
 
 import '../About Us/aboutUs.dart';
@@ -21,10 +22,10 @@ class _NavbarScreenState extends State<NavbarScreen> {
     //  Orders(),
     //  Orders(),
    const  Orders(),
-     AboutUs(),
-    // const addOrder(),
-    // const Customers(),
     //  AboutUs(),
+    // const addOrder(),
+    const Customers(),
+     AboutUs(),
   ];
 
   void updatePage(int page) {
@@ -93,6 +94,25 @@ void initState() {
               ),
               child: const Icon(
                 Icons.people_outline_outlined,
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              width: bottomBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: _page == 2
+                        ? GlobalVariables.primaryColor
+                        : GlobalVariables.backgroundColor,
+                    width: bottomBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: const Icon(
+                Icons.present_to_all_outlined,
               ),
             ),
             label: '',

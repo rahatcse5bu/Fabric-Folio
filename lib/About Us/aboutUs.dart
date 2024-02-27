@@ -110,7 +110,7 @@ class _AboutUsState extends State<AboutUs> {
                   ),
                   child: Center(
                     child: Text(
-                      'নুরিয়া পাঞ্জাবি টেইলার্স এন্ড ফেব্রিকস',
+                      'Fabrics Folio Ltd',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class _AboutUsState extends State<AboutUs> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'মাদ্রাসাপাড়া, আশ্রাফাবাদ, কামরাঙ্গীরচর, ঢাকা-১২১১',
+                  'Barisal , Bangladesh',
                   maxLines: 2,
                   style: TextStyle(
                     fontSize: 13,
@@ -131,7 +131,7 @@ class _AboutUsState extends State<AboutUs> {
                 ),
                 SizedBox(height: 15),
                 Text(
-                  'প্রোপাইটার: মো আসিক জোবায়ের',
+                  'University of Barisal',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 5),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cross_local_storage/cross_local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,10 +34,13 @@ class _addCustomerState extends State<addCustomer> {
     String customerPhone,
     String customerLocation,
   ) async {
-    final url = 'https://nuriya-tailers-backend.vercel.app/api/customers/';
+         LocalStorageInterface prefs = await LocalStorage.getInstance();
+     String? user_id= prefs.getString('user_id');
+    final url = 'https://fabric-folio.vercel.app/api/customers/';
     final response = await http.post(
       Uri.parse(url),
       body: jsonEncode({
+        'user': user_id,
         'customerName': customerName,
         'customerPhone': customerPhone,
         'customerLocation': customerLocation,
@@ -45,6 +49,7 @@ class _addCustomerState extends State<addCustomer> {
     );
 
     var myJSON = jsonEncode({
+       'user': user_id,
       'customerName': customerName,
       'customerPhone': customerPhone,
       'customerLocation': customerLocation,
@@ -65,8 +70,10 @@ class _addCustomerState extends State<addCustomer> {
   }
 
   Future<List<Map<String, dynamic>>> fetchCustomers() async {
+             LocalStorageInterface prefs = await LocalStorage.getInstance();
+     String? user_id= prefs.getString('user_id');
     final response = await http.get(
-        Uri.parse('https://nuriya-tailers-backend.vercel.app/api/customers'));
+        Uri.parse('https://fabric-folio.vercel.app/api/customers/all/'+user_id.toString()));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
       return List<Map<String, dynamic>>.from(jsonData['data']);

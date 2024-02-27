@@ -24,6 +24,7 @@ class Order {
   final String customerName;
   final String customerPhone;
   final String customerLocation;
+  // final String fetched_customer_id;
   final String orderStatus;
   final int paidAmount;
   final String estimatedDeliveryTime;
@@ -36,6 +37,7 @@ class Order {
     required this.customerName,
     required this.customerPhone,
     required this.customerLocation,
+    // required this.fetched_customer_id,
     required this.paidAmount,
     required this.estimatedDeliveryTime,
     required this.orderStatus,
@@ -80,6 +82,7 @@ class _OrdersState extends State<Orders> {
   List<Order> filteredOrders = [];
   List<Map<String, dynamic>> clothList = [];
   List<Map<String, dynamic>> customers = [];
+  String fetched_customer_id= '';
   TextEditingController _searchController = TextEditingController();
 
 //my variables starts
@@ -105,6 +108,7 @@ class _OrdersState extends State<Orders> {
           customerName: order['customerName'] ?? '',
           customerPhone: order['customerPhone'] ?? '',
           customerLocation: order['customerLocation'] ?? '',
+          // fetched_customer_id: order['customer'] ?? '',
           orderStatus: order['orderStatus'],
           paidAmount: order['paidAmount'],
           estimatedDeliveryTime: order['estimatedDeliveryTime'],
@@ -127,7 +131,7 @@ Future<List<User>> fetchUserDetails() async {
               String? u_id = prefs.getString('user_id');
     final response = await http.get(
         // Uri.parse('https://nuriya-tailers-backend.vercel.app/api/orders/'));
-        Uri.parse('https://fabric-folio.vercel.app/api/users/$u_id'));
+        Uri.parse('https://fabric-folio.vercel.app/api/users/$u_id')); 
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
       List<User> userDetails = [];

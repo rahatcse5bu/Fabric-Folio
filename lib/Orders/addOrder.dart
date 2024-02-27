@@ -22,10 +22,12 @@ class addOrder extends StatefulWidget {
 class _addOrderState extends State<addOrder> {
   
   List<Map<String, dynamic>> customers = [];
+ Map<String, dynamic> selectedCustomerObj = {};
   List<Map<String, dynamic>> clothList = [];
   bool isSeloyar = false;
   bool isPayjama = false;
-
+  String _selectedCustomer='';
+  String _selectedCustomerId= "";
   bool useCharacterKeyboardCustPhone = false;
 
   bool useCharacterKeyboardLomba = false;
@@ -177,15 +179,15 @@ class _addOrderState extends State<addOrder> {
       'is3GuntiDana': false,
       'price': 0,
     });
-    // fetchCustomers().then((value) {
-    //   setState(() {
-    //     customers = value;
-    //     if (customers.isNotEmpty) {
-    //       _selectedCustomer = customers[0]['customerName'];
-    //       _selectedCustomerId = customers[0]['_id'];
-    //     }
-    //   });
-    // });
+    fetchCustomers().then((value) {
+      setState(() {
+        customers = value;
+        if (customers.isNotEmpty) {
+          _selectedCustomer = customers[0]['customerName'];
+          _selectedCustomerId = customers[0]['_id'];
+        }
+      });
+    });
   }
 
 // String selectedCustomerId = '';
@@ -215,9 +217,10 @@ class _addOrderState extends State<addOrder> {
       body: jsonEncode({
         // 'user':'659d2aa69822f26d7e8a5675',
         'user':prefs.getString('user_id'),
-        'customerName': _selectedCustomerName,
-        'customerPhone': _selectedCustomerPhone,
-        'customerLocation': _selectedCustomerLocation,
+        // 'customerName': _selectedCustomerName,
+        // 'customerPhone': _selectedCustomerPhone,
+        // 'customerLocation': _selectedCustomerLocation,
+        'customer': selectedCustomerObj['_id'],
         'orderNote': orderNote,
         'paidAmount': paidAmount,
         'estimatedDeliveryTime': estimatedDeliveryTime.toIso8601String(),
@@ -228,9 +231,10 @@ class _addOrderState extends State<addOrder> {
       headers: {'Content-Type': 'application/json'},
     );
     var myJSON = jsonEncode({
-      'customerName': _selectedCustomerName,
-      'customerPhone': _selectedCustomerPhone,
-      'customerLocation': _selectedCustomerLocation,
+      // 'customerName': _selectedCustomerName,
+      // 'customerPhone': _selectedCustomerPhone,
+      // 'customerLocation': _selectedCustomerLocation,
+       'customer': selectedCustomerObj['_id'],
       'orderNote': orderNote,
       'paidAmount': paidAmount,
       'estimatedDeliveryTime': estimatedDeliveryTime.toIso8601String(),
@@ -253,9 +257,11 @@ class _addOrderState extends State<addOrder> {
   }
 
   Future<List<Map<String, dynamic>>> fetchCustomers() async {
+     LocalStorageInterface prefs = await LocalStorage.getInstance();
+     String? user_id= prefs.getString('user_id');
     final response = await http.get(
-        Uri.parse('https://nuriya-tailers-backend.vercel.app/api/customers'));
-    if (response.statusCode == 200) {
+        Uri.parse('https://fabric-folio.vercel.app/api/customers/all/'+user_id.toString()));
+    if (response.statusCode == 200 || response.statusCode == 202) {
       final jsonData = jsonDecode(response.body);
       return List<Map<String, dynamic>>.from(jsonData['data']);
     } else {
@@ -300,112 +306,112 @@ class _addOrderState extends State<addOrder> {
               SizedBox(
                 height: 10,
               ),
-              // DropdownSearch<String>(
-              //   popupProps: PopupProps.menu(
-              //     showSelectedItems: true,
-              //     // disabledItemFn: (String s) => s.startsWith('I'),
-              //   ),
-              //   items: customers
-              //       .map<String>((customer) => customer['customerName'])
-              //       .toList(),
-              //   dropdownDecoratorProps: DropDownDecoratorProps(
-              //     dropdownSearchDecoration: InputDecoration(
-              //       labelText: 'কাস্টমার নির্বাচন করুন',
+              DropdownSearch<String>(
+                popupProps: PopupProps.menu(
+                  showSelectedItems: true,
+                  // disabledItemFn: (String s) => s.startsWith('I'),
+                ),
+                items: customers
+                    .map<String>((customer) => customer['customerName'])
+                    .toList(),
+                dropdownDecoratorProps: DropDownDecoratorProps(
+                  dropdownSearchDecoration: InputDecoration(
+                    labelText: 'কাস্টমার নির্বাচন করুন',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                ),
+                onChanged: (String? selectedCustomer) {
+                  setState(() {
+                    _selectedCustomer = selectedCustomer!;
+                     selectedCustomerObj = customers.firstWhere(
+                      (customer) =>
+                          customer['customerName'] == _selectedCustomer,
+                    );
+                  });
+                },
+                selectedItem: _selectedCustomer,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              // TextFormField(
+              //   decoration: InputDecoration(
+              //       labelText: 'কাস্টমারের নাম',
               //       border: OutlineInputBorder(
               //         borderRadius: BorderRadius.circular(5),
-              //       ),
-              //     ),
-              //   ),
-              //   onChanged: (String? selectedCustomer) {
+              //       )),
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Please enter a customer name';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) {
               //     setState(() {
-              //       _selectedCustomer = selectedCustomer!;
-              //       final selectedCustomerObj = customers.firstWhere(
-              //         (customer) =>
-              //             customer['customerName'] == _selectedCustomer,
-              //       );
-              //       _selectedCustomerId = selectedCustomerObj['_id'];
+              //       _selectedCustomerName = value;
               //     });
               //   },
-              //   selectedItem: _selectedCustomer,
               // ),
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                    labelText: 'কাস্টমারের নাম',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a customer name';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _selectedCustomerName = value;
-                  });
-                },
-              ),
 
-              SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                    labelText: 'কাস্টমারের ফোন নাম্বার',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a customer phone number';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _selectedCustomerPhone = value;
-                  });
-                },
-                inputFormatters: [
-                  // Use numeric input formatter initially
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                keyboardType: useCharacterKeyboardCustPhone
-                    ? TextInputType.text // Character keyboard
-                    : TextInputType.number, // Numeric keyboard
-                onTap: () {
-                  setState(() {
-                    useCharacterKeyboardCustPhone =
-                        !useCharacterKeyboardCustPhone;
-                  });
-                },
-              ),
-              SizedBox(
-                height: 10,
-              ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // TextFormField(
+              //   decoration: InputDecoration(
+              //       labelText: 'কাস্টমারের ফোন নাম্বার',
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(5),
+              //       )),
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Please enter a customer phone number';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) {
+              //     setState(() {
+              //       _selectedCustomerPhone = value;
+              //     });
+              //   },
+              //   inputFormatters: [
+              //     // Use numeric input formatter initially
+              //     FilteringTextInputFormatter.digitsOnly,
+              //   ],
+              //   keyboardType: useCharacterKeyboardCustPhone
+              //       ? TextInputType.text // Character keyboard
+              //       : TextInputType.number, // Numeric keyboard
+              //   onTap: () {
+              //     setState(() {
+              //       useCharacterKeyboardCustPhone =
+              //           !useCharacterKeyboardCustPhone;
+              //     });
+              //   },
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
 
-              TextFormField(
-                decoration: InputDecoration(
-                    labelText: 'কাস্টমারের ঠিকানা',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter a customer location';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    _selectedCustomerLocation = value;
-                  });
-                },
-              ),
+              // TextFormField(
+              //   decoration: InputDecoration(
+              //       labelText: 'কাস্টমারের ঠিকানা',
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(5),
+              //       )),
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Please enter a customer location';
+              //     }
+              //     return null;
+              //   },
+              //   onChanged: (value) {
+              //     setState(() {
+              //       _selectedCustomerLocation = value;
+              //     });
+              //   },
+              // ),
+             
               SizedBox(
                 height: 10,
               ),
