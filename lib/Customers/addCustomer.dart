@@ -198,8 +198,7 @@ class _addCustomerState extends State<addCustomer> {
 
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
-                          primary: GlobalVariables.primaryColor,
+                              horizontal: 20, vertical: 20), backgroundColor: GlobalVariables.primaryColor,
                           // onPrimary: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.0),

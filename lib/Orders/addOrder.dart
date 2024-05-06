@@ -1827,8 +1827,8 @@ class _addOrderState extends State<addOrder> {
                           children: [
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.green,
-                                onPrimary: Colors.white,
+                                backgroundColor: Colors.green,
+                                // onPrimary: Colors.white,
                               ),
                               onPressed: _addClothItem,
                               child: Text('Add Cloth Item'),
@@ -1836,8 +1836,8 @@ class _addOrderState extends State<addOrder> {
                             (index + 1 > 1 || clothList.length >= 2)
                                 ? ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: Colors.red,
-                                      onPrimary: Colors.white,
+                                      backgroundColor: Colors.red,
+                                      // onPrimary: Colors.white,
                                     ),
                                     onPressed: () => _removeClothItem(index),
                                     child: Text('Remove Cloth Item'),
@@ -1860,8 +1860,7 @@ class _addOrderState extends State<addOrder> {
                   //width of button
 
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    primary: GlobalVariables.primaryColor,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20), backgroundColor: GlobalVariables.primaryColor,
                     // onPrimary: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0),

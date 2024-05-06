@@ -187,7 +187,7 @@ class _orderDetailsState extends State<orderDetails> {
                                   fontSize: 15,
                                 )),
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
+                              backgroundColor: Colors.green,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -211,7 +211,7 @@ class _orderDetailsState extends State<orderDetails> {
                             },
                             child: Text('Edit Order'),
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
+                              backgroundColor: Colors.green,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
@@ -228,7 +228,7 @@ class _orderDetailsState extends State<orderDetails> {
                             },
                             child: Text('অর্ডার মুছেন'),
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.red,
+                              backgroundColor: Colors.red,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),

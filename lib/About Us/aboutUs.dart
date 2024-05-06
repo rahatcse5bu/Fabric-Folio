@@ -171,7 +171,7 @@ class _AboutUsState extends State<AboutUs> {
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: GlobalVariables.primaryColor,
+                    backgroundColor: GlobalVariables.primaryColor,
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
